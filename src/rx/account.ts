@@ -37,7 +37,11 @@ export const accountStore = {
         var user: any = jwtDecode(token);
 
         if (user.verified) {
-          accountStore.loadAccountState();
+          subject.next({
+            ...state,
+            user: user,
+            userLogged: true,
+          });
           emitter.next({ status: "Ok", user: user });
         } else {
           emitter.next({ status: "NotVerified" });

@@ -12,17 +12,21 @@ import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
 
-import { useAppSelector } from "redux/hooks";
 import { CartState } from "types/appTypes";
+import { useEffect, useState } from "react";
+import { cartStore } from "rx/cart";
 
 
 export default function CarrelloPage() {
 
-    const cartState: CartState = useAppSelector((state) => state.cart);
-    const { items, total } = cartState;
+    const [cartState, setCartState] = useState<CartState>();
+
+    useEffect(() => {
+        cartStore.subscribe(setCartState);
+    }, [])
 
     const content = () => {
-        if (Object.keys(items).length > 0) {
+        if (cartState && Object.keys(cartState?.items).length > 0) {
             return <>
                 <div className="col-lg-12 d-flex flex-grow-1 flex-column">
                     <div className="col-lg-12">
@@ -39,14 +43,14 @@ export default function CarrelloPage() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {Object.values(items).map((row: any) => <CartRow actionsVisible={true} row={row} key={row.item.id}></CartRow>)}
+                                            {Object.values(cartState?.items).map((row: any) => <CartRow actionsVisible={true} row={row} key={row.item.id}></CartRow>)}
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td className="col-6"></td>
                                                 <td className="col-2"></td>
                                                 <td className="fw-bold text-center">Totale</td>
-                                                <td className="text-center">{total.toFixed(2)} €</td>
+                                                <td className="text-center">{cartState?.total.toFixed(2)} €</td>
                                             </tr>
                                         </tfoot>
                                     </table>

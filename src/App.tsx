@@ -38,6 +38,8 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { appStore } from "rx/app";
 import { AppState } from "types/appTypes";
 import { accountStore } from "rx/account";
+import AnonymousRequired from "components/roles/AnonymousRequired";
+import { cartStore } from "rx/cart";
 
 
 function convertToRGB(value: string) {
@@ -55,10 +57,9 @@ function convertToRGB(value: string) {
 
 appStore.init();
 accountStore.loadAccountState();
+cartStore.readCartFromStorage();
 
 function App() {
-
-
 
   const [appState, setAppState] = useState<AppState>();
 
@@ -97,9 +98,12 @@ function App() {
               </Route>
             </Route>
           </Route>
-          <Route path="login" element={<LoginPage></LoginPage>}></Route>
-          <Route path="signin" element={<SigninPage></SigninPage>}></Route>
-          <Route path="logout" element={<Logout></Logout>}></Route>
+          <Route element={<AnonymousRequired></AnonymousRequired>}>
+            <Route path="login" element={<LoginPage></LoginPage>}></Route>
+            <Route path="signin" element={<SigninPage></SigninPage>}></Route>
+            <Route path="logout" element={<Logout></Logout>}></Route>
+          </Route>
+
           <Route path="verificaAccount" element={<VerificaAccountPage></VerificaAccountPage>}></Route>
           <Route path="verificaAccount/token" element={<VerificaAccountTokenPage></VerificaAccountTokenPage>}></Route>
           <Route path="resetPassword" element={<ResetPasswordPage></ResetPasswordPage>}></Route>

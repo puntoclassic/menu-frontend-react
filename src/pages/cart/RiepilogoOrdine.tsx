@@ -8,23 +8,34 @@ import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
 import CartRow from "pages/cart/components/CartRow";
+import { useState, useLayoutEffect, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushNote } from "redux/reducers/cart";
+
+import { appStore } from "rx/app";
+import { cartStore } from "rx/cart";
 import { AppState, CartState } from "types/appTypes";
 
 export default function RiepilogoOrdinePage() {
-    const cartState: CartState = useAppSelector((state) => state.cart);
-    const appState: AppState = useAppSelector((state) => state.app);
-    const { items, total, tipologia_consegna, indirizzo, orario, note } = cartState;
-    const { settings } = appState;
 
-    const shipping_row = {
+
+    const [cartState, setCartState] = useState<CartState>();
+
+    useLayoutEffect(() => {
+        cartStore.subscribe(setCartState);
+    }, [])
+
+    const [appState, setAppState] = useState<AppState>();
+
+    useLayoutEffect(() => {
+        appStore.subscribe(setAppState)
+    }, [])
+
+    var shipping_row = {
         item: {
             id: 0,
             name: "Spese di consegna",
-            price: settings.shipping_costs
+            price: 0
         },
         quantity: 1
     }
@@ -33,21 +44,25 @@ export default function RiepilogoOrdinePage() {
         note: string
     }
 
-    const { register, handleSubmit, formState: { errors } } = useForm<RiepilogoOrdineFields>({
-        defaultValues: {
-            note: note
-        }
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<RiepilogoOrdineFields>({
+
     });
+
+    useEffect(() => {
+        shipping_row.item.price = appState?.settings.shipping_costs;
+        setValue("note", cartState?.note ?? "");
+
+    }, [appState, cartState?.note, setValue, shipping_row.item])
 
 
     const informazioniConsegna = () => {
-        if (tipologia_consegna !== "asporto") {
+        if (cartState?.tipologia_consegna !== "asporto") {
             return <>
                 <div className="row g-0">
                     <h6>Dettagli</h6>
                     <p>
-                        Orario: {orario} <br />
-                        Indirizzo di consegna: {indirizzo}
+                        Orario: {cartState?.orario} <br />
+                        Indirizzo di consegna: {cartState?.indirizzo}
                     </p>
                 </div>
             </>
@@ -57,19 +72,18 @@ export default function RiepilogoOrdinePage() {
     }
 
     const onSubmit = (data: RiepilogoOrdineFields) => {
-        storeDispatch(pushNote(data.note));
-        //invia ordine
+        cartStore.updateNote(data.note);
     }
 
     const shipping_costs_row = () => {
-        if (tipologia_consegna !== "asporto") {
+        if (cartState?.tipologia_consegna !== "asporto") {
             return <CartRow key={-1} row={shipping_row}></CartRow>
         }
         return null;
     }
 
     const subTotal = () => {
-        return tipologia_consegna !== "asporto" ? total + parseFloat(settings.shipping_costs) : total;
+        return cartState?.tipologia_consegna !== "asporto" ? cartState!.total + parseFloat(appState?.settings.shipping_costs) : cartState!.total;
     }
 
     const content = () => {
@@ -77,11 +91,11 @@ export default function RiepilogoOrdinePage() {
             <div className="col-lg-12 d-flex flex-grow-1 flex-column">
                 <div className="col-lg-12">
                     <div className="row g-0">
-                        <h5 className="m-0 mb-4">{tipologia_consegna === "asporto" ? "2" : "3"}. Riepilogo</h5>
+                        <h5 className="m-0 mb-4">{cartState?.tipologia_consegna === "asporto" ? "2" : "3"}. Riepilogo</h5>
                         <h6>Informazioni di consegna</h6>
                         <div className="col-lg-6">
                             <div className="row g-0">
-                                {tipologia_consegna === "asporto" ? <p>Hai scelto di ritirare il tuo ordine (asporto)</p> : <p>Hai scelto la consegna a domicilio</p>}
+                                {cartState?.tipologia_consegna === "asporto" ? <p>Hai scelto di ritirare il tuo ordine (asporto)</p> : <p>Hai scelto la consegna a domicilio</p>}
                             </div>
                             {informazioniConsegna()}
                         </div>
@@ -99,7 +113,7 @@ export default function RiepilogoOrdinePage() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {Object.values(items).map((row: any) => <CartRow actionsVisible={false} row={row} key={row.item.id}></CartRow>)}
+                                        {Object.values(cartState?.items).map((row: any) => <CartRow actionsVisible={false} row={row} key={row.item.id}></CartRow>)}
                                         {shipping_costs_row()}
                                     </tbody>
                                     <tfoot>
@@ -167,9 +181,9 @@ export default function RiepilogoOrdinePage() {
                         <li className="breadcrumb-item">
                             <Link to="/account/cassa/tipologia-consegna" className="text-light">1</Link>
                         </li>
-                        {tipologia_consegna === "asporto" ? null : linkInformazioniConsegna()}
+                        {cartState?.tipologia_consegna === "asporto" ? null : linkInformazioniConsegna()}
 
-                        <li className="breadcrumb-item active text-light" aria-current="page">{tipologia_consegna === "asporto" ? "2" : "3"}. Riepilogo ordine</li>
+                        <li className="breadcrumb-item active text-light" aria-current="page">{cartState?.tipologia_consegna === "asporto" ? "2" : "3"}. Riepilogo ordine</li>
                     </ol>
                 </nav>
             </Row>
@@ -180,10 +194,10 @@ export default function RiepilogoOrdinePage() {
                             <h5 className="m-0">1. Spedizione e consegna</h5>
                         </Link>
                     </div>
-                    {tipologia_consegna === "asporto" ? null : <>
+                    {cartState?.tipologia_consegna === "asporto" ? null : <>
                         <div className="row g-0 border-top p-4 d-flex justify-content-center flex-column">
                             <Link to="/account/cassa/informazioni-consegna" className="text-dark text-decoration-none">
-                                <h5 className="m-0">{tipologia_consegna !== "asporto" ? "3" : "2"}. Indirizzo e orario</h5>
+                                <h5 className="m-0">{cartState?.tipologia_consegna !== "asporto" ? "3" : "2"}. Indirizzo e orario</h5>
                             </Link>
                         </div>
                     </>}

@@ -8,10 +8,12 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
+import { useState, useLayoutEffect, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushIndirizzo, pushOrario } from "redux/reducers/cart";
+
+import { cartStore } from "rx/cart";
+import { CartState } from "types/appTypes";
 import informazioniConsegnaValidator from "validators/informazioniConsegnaValidator";
 
 
@@ -22,20 +24,31 @@ export default function InformazioniConsegnaPage() {
         indirizzo: string;
     }
 
-    const { orario, indirizzo } = useAppSelector((state) => state.cart);
-    const { register, handleSubmit, formState: { errors } } = useForm<InformazioniConsegnaFields>({
+    const [cartState, setCartState] = useState<CartState>();
+
+    useLayoutEffect(() => {
+        cartStore.subscribe(setCartState);
+    }, [])
+
+
+
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<InformazioniConsegnaFields>({
         resolver: yupResolver(informazioniConsegnaValidator),
-        defaultValues: {
-            orario: orario,
-            indirizzo: indirizzo
-        }
+
     });
+
+    useEffect(() => {
+        setValue("indirizzo", cartState?.indirizzo ?? "");
+        setValue("orario", cartState?.orario ?? "");
+
+    }, [cartState?.indirizzo, cartState?.orario, setValue]);
 
     const navigate = useNavigate();
 
     const onSubmit = (data: InformazioniConsegnaFields) => {
-        storeDispatch(pushIndirizzo(data.indirizzo));
-        storeDispatch(pushOrario(data.orario));
+
+        cartStore.updateIndirizzo(data.indirizzo);
+        cartStore.updateOrario(data.orario);
         navigate("/account/cassa/riepilogo-ordine");
     }
 

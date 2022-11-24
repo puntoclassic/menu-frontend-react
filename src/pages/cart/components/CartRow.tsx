@@ -1,26 +1,26 @@
-import { increaseQty, decreaseQty, removeFromCart } from "redux/thunks/cart"
-import { storeDispatch } from "redux/hooks";
+import { cartStore } from "rx/cart";
+
 
 
 export default function CartRow({ row, actionsVisible }: any) {
     var item = row.item;
 
     const increaseQtaAction = (row: any) => {
-        storeDispatch(increaseQty({
-            id: item.id,
-        }))
+        cartStore.increaseQty({
+            id: item.id
+        })
     }
 
     const decreaseQtaAction = (row: any) => {
-        storeDispatch(decreaseQty({
+        cartStore.decreaseQty({
             id: item.id,
-        }))
+        })
     }
 
     const removeFromCartAction = (row: any) => {
-        storeDispatch(removeFromCart({
-            id: item.id,
-        }))
+        cartStore.removeFromCart({
+            id: item.id
+        })
     }
 
     const actions = () => {

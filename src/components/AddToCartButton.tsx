@@ -1,15 +1,13 @@
-import { storeDispatch } from "redux/hooks";
-import { addToCart } from "redux/thunks/cart";
-
+import { cartStore } from "rx/cart";
 
 export default function AddToCartButton({ item }: any) {
 
     const addToCartAction = () => {
-        storeDispatch(addToCart({
+        cartStore.addToCart({
             id: item.id,
             name: item.name,
             price: item.price
-        }))
+        })
     }
 
     return <>

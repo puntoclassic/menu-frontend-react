@@ -8,10 +8,12 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushTipologiaConsegna } from "redux/reducers/cart";
+import { cartStore } from "rx/cart";
+import { CartState } from "types/appTypes";
+
 import tipologiaConsegnaValidator from "validators/tipologiaConsegnaValidator";
 
 
@@ -21,18 +23,24 @@ export default function TipologiaConsegnaPage() {
         tipologia_consegna: string
     }
 
-    const { tipologia_consegna } = useAppSelector((state) => state.cart);
-    const { register, handleSubmit, formState: { errors } } = useForm<TipologiaConsegnaFields>({
+    const [cartState, setCartState] = useState<CartState>();
+
+    useLayoutEffect(() => {
+        cartStore.subscribe(setCartState);
+    }, [])
+
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<TipologiaConsegnaFields>({
         resolver: yupResolver(tipologiaConsegnaValidator),
-        defaultValues: {
-            tipologia_consegna: tipologia_consegna
-        }
     });
+
+    useEffect(() => {
+        setValue("tipologia_consegna", cartState?.tipologia_consegna ?? "asporto");
+    }, [cartState, setValue])
 
     const navigate = useNavigate();
 
     const onSubmit = (data: TipologiaConsegnaFields) => {
-        storeDispatch(pushTipologiaConsegna(data.tipologia_consegna));
+        cartStore.updateTipologiaConsegna(data.tipologia_consegna);
         if (data.tipologia_consegna === "asporto") {
             navigate("/account/cassa/riepilogo-ordine");
         } else {

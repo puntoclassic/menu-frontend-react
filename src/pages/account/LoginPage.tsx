@@ -13,25 +13,16 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginValidator from "validators/loginValidator";
 import LoginFields from "types/LoginFields";
-import { useEffect, useLayoutEffect, useState } from "react";
-
+import { useState } from "react";
 import { accountStore } from "rx/account";
 import { messagesStore } from "rx/messages";
-import { AccountState } from "types/appTypes";
 
 export default function LoginPage() {
 
     const [searchParams] = useSearchParams();
     const backUrl = searchParams.get("backUrl");
 
-    const [accountState, setAccountState] = useState<AccountState>();
-
-    useLayoutEffect(() => {
-        accountStore.subscribe(setAccountState);
-    }, []);
-
     const [isPending, setIsPending] = useState(false);
-
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFields>({
@@ -47,13 +38,14 @@ export default function LoginPage() {
 
                 if (value.status === "Ok") {
 
+                    navigate(backUrl ?? "/account");
+
                     setTimeout(() => {
                         messagesStore.push(
                             "success",
                             "Bentornato " + value.user.firstname + " " + value.user.lastname,
                         );
                     }, 50)
-                    // navigate(backUrl || "/account", { replace: true })
                 }
                 if (value.status === "NotVerified") {
                     messagesStore.push(
@@ -74,14 +66,6 @@ export default function LoginPage() {
             }
         })
     }
-
-    useEffect(() => {
-
-        if (accountState?.user && accountState?.user.verified) {
-            navigate(backUrl || "/account", { replace: true })
-        }
-
-    }, [accountState?.user, navigate, backUrl])
 
     return <>
         <BaseLayout title="Accedi">
