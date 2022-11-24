@@ -16,7 +16,7 @@ import LoginFields from "types/LoginFields";
 import { useEffect } from "react";
 import { login } from "redux/thunks/account";
 import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountState } from "redux/types/reduxTypes";
+import { AccountState } from "types/appTypes";
 
 export default function LoginPage() {
 

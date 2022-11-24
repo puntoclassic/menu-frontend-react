@@ -34,8 +34,9 @@ import TipologiaConsegnaPage from "pages/cart/TipologiaConsegnaPage";
 import InformazioniConsegnaPage from "pages/cart/InformazioniConsegnaPage";
 import RiepilogoOrdinePage from "pages/cart/RiepilogoOrdine";
 import CartFilledRequiredRoute from "components/roles/CartFilledRequredRoute";
-import { useEffect } from "react";
-import { useAppSelector } from "redux/hooks";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { appStore } from "rx/app";
+import { AppState } from "types/appTypes";
 
 
 function convertToRGB(value: string) {
@@ -52,14 +53,25 @@ function convertToRGB(value: string) {
 }
 function App() {
 
-  const { settings } = useAppSelector((state) => state.app);
+  appStore.init();
+
+  const [appState, setAppState] = useState<AppState>();
+
+  useLayoutEffect(() => {
+    appStore.subscribe(setAppState);
+  }, []);
+
   useEffect(() => {
-    if (settings.theme_primary_color && settings.theme_secondary_color) {
-      document.documentElement.style.setProperty('--bs-primary-rgb', convertToRGB(settings.theme_primary_color));
-      document.documentElement.style.setProperty('--bs-secondary-rgb', convertToRGB(settings.theme_secondary_color));
+    if (appState?.settings) {
+      var settings = appState?.settings;
+      if (settings.theme_primary_color && settings.theme_secondary_color) {
+        document.documentElement.style.setProperty('--bs-primary-rgb', convertToRGB(settings.theme_primary_color));
+        document.documentElement.style.setProperty('--bs-secondary-rgb', convertToRGB(settings.theme_secondary_color));
+      }
     }
 
-  }, [settings])
+
+  }, [appState])
 
   return (
     <BrowserRouter>

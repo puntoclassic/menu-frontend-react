@@ -11,8 +11,7 @@ import BaseLayout from "layouts/BaseLayout";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
+import { messagesStore } from "rx/messages";
 import orderStateService from "services/orderStateService";
 import OrderStateFields from "types/admin/OrderStateFields";
 import orderStateValidator from "validators/orderStateValidator";
@@ -31,10 +30,9 @@ export default function AdminOrderStateCreatePage() {
         setIsPending(true);
 
         if (await orderStateService.createOrderState(data)) {
-            storeDispatch(pushMessage({
-                tag: "success",
-                message: "Stato ordine creato",
-            }));
+
+            messagesStore.push("success", "Stato ordine creato")
+
         }
 
         setIsPending(false);

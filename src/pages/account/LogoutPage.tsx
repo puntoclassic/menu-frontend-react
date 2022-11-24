@@ -11,9 +11,9 @@ import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
 import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
 import { logout } from "redux/thunks/account";
-import { AccountState } from "redux/types/reduxTypes";
+import { AccountState } from "types/appTypes";
+import { messagesStore } from "rx/messages";
 
 
 export default function Logout() {
@@ -26,10 +26,9 @@ export default function Logout() {
         if (user) {
             storeDispatch(logout())
         } else {
-            storeDispatch(pushMessage({
-                "tag": "success",
-                "message": "Sei stato disconnesso con successo"
-            }))
+
+            messagesStore.push("success", "Sei stato disconnesso con successo")
+
             navigate("/account/login");
         }
     }, [user, navigate]);

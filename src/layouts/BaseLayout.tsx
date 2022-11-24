@@ -1,13 +1,19 @@
+import { useState, useLayoutEffect } from "react";
 import { Helmet } from "react-helmet"
-import { useAppSelector } from "redux/hooks"
+import { AppState } from "types/appTypes";
+import { appStore } from "rx/app";
 
 export default function BaseLayout({ title, children }: any) {
-    const appState = useAppSelector((state) => state.app);
-
-    const { settings } = appState;
 
 
-    var site_name = ` :: ${(settings.site_name ?? "")}`
+    const [appState, setAppState] = useState<AppState>();
+
+    useLayoutEffect(() => {
+        appStore.subscribe(setAppState);
+    }, []);
+
+
+    var site_name = ` :: ${(appState?.settings.site_name ?? "")}`
 
     return <>
         <Helmet>

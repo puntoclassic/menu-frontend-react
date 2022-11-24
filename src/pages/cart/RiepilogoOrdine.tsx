@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { storeDispatch, useAppSelector } from "redux/hooks";
 import { pushNote } from "redux/reducers/cart";
-import { AppState, CartState } from "redux/types/reduxTypes";
+import { AppState, CartState } from "types/appTypes";
 
 export default function RiepilogoOrdinePage() {
     const cartState: CartState = useAppSelector((state) => state.cart);

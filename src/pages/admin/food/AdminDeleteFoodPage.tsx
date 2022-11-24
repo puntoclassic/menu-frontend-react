@@ -9,9 +9,8 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
 import foodService from "services/foodService";
+import { messagesStore } from "rx/messages";
 
 export default function AdminFoodDeletePage() {
 
@@ -45,10 +44,9 @@ export default function AdminFoodDeletePage() {
 
         setIsPending(true);
         if (await foodService.deleteFood(parseInt(id!))) {
-            storeDispatch(pushMessage({
-                tag: "success",
-                message: "Cibo eliminato",
-            }));
+
+            messagesStore.push("success", "Cibo eliminato")
+
         }
         navigate("/amministrazione/cibi");
         setIsPending(false);

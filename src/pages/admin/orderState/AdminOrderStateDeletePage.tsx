@@ -9,8 +9,7 @@ import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
 import { useState, useCallback, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
+import { messagesStore } from "rx/messages";
 import orderStateService from "services/orderStateService";
 
 export default function AdminOrderStateDeletePage() {
@@ -43,10 +42,7 @@ export default function AdminOrderStateDeletePage() {
     const doDelete = async () => {
         setIsPending(true);
         if (await orderStateService.deleteOrderState(parseInt(id!))) {
-            storeDispatch(pushMessage({
-                tag: "success",
-                message: "Stato ordine eliminato",
-            }));
+            messagesStore.push("success", "Stato ordine eliminato")
         }
         setIsPending(false);
         navigate("/amministrazione/impostazioni/statiOrdine");

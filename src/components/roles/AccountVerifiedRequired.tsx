@@ -1,8 +1,8 @@
 import {
     Navigate, Outlet, useLocation
 } from 'react-router-dom';
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
+import { useAppSelector } from "redux/hooks";
+import { messagesStore } from 'rx/messages';
 
 export default function AccountVerifiedRequired() {
 
@@ -15,10 +15,9 @@ export default function AccountVerifiedRequired() {
     if (user && user.verified) {
         return <Outlet />;
     } else {
-        storeDispatch(pushMessage({
-            "tag": "info",
-            "message": "Devi verificare il tuo account prima di poter accedere a questa pagina"
-        }))
+
+        messagesStore.push("info", "Devi verificare il tuo account prima di poter accedere a questa pagina")
+
         return <Navigate to={"/account/login?backUrl=" + location.pathname} />
     }
 

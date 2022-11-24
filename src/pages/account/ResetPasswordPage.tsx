@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountState } from "redux/types/reduxTypes";
+import { AccountState } from "types/appTypes";
 import ResetPasswordFields from "types/ResetPasswordFields";
 import HomeButton from "components/HomeButton";
 import { resetPassword } from "redux/thunks/account";

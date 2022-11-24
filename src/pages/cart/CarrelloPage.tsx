@@ -13,7 +13,7 @@ import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
 
 import { useAppSelector } from "redux/hooks";
-import { CartState } from "redux/types/reduxTypes";
+import { CartState } from "types/appTypes";
 
 
 export default function CarrelloPage() {

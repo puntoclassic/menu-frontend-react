@@ -2,7 +2,7 @@ import {
   AccountSigninStatus,
   AccountState,
   AccountVerifyStatus,
-} from "../types/reduxTypes";
+} from "../../types/appTypes";
 
 const { createSlice } = require("@reduxjs/toolkit");
 

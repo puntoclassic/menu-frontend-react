@@ -11,12 +11,11 @@ import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
 import { useForm } from "react-hook-form";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
 import FoodFields from "types/admin/FoodFields";
 import foodValidator from "validators/foodValidator";
 import foodService from "services/foodService";
 import categoryService from "services/categoryService";
+import { messagesStore } from "rx/messages";
 
 
 export default function AdminCategoryFoodPage() {
@@ -33,10 +32,7 @@ export default function AdminCategoryFoodPage() {
     const onSubmit = async (data: FoodFields) => {
         setIsPending(true);
         if (await foodService.createFood(data)) {
-            storeDispatch(pushMessage({
-                tag: "success",
-                message: "Cibo creato",
-            }));
+            messagesStore.push("success", "Cibo creato")
         }
         setIsPending(false);
         navigate("/amministrazione/cibi");

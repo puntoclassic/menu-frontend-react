@@ -13,7 +13,7 @@ import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
 import { updatePassword } from "redux/thunks/account";
 import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountState } from "redux/types/reduxTypes";
+import { AccountState } from "types/appTypes";
 import ChangePasswordFields from "types/ChangePasswordFields";
 import changePasswordValidator from "validators/changePasswordValidator";
 import Messages from "components/Messages";

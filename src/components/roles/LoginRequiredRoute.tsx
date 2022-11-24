@@ -2,8 +2,8 @@ import Loading from 'pages/Loading';
 import {
     Navigate, Outlet, useLocation
 } from 'react-router-dom';
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
+import { useAppSelector } from "redux/hooks";
+import { messagesStore } from 'rx/messages';
 
 export default function LoginRequiredRoute() {
 
@@ -15,10 +15,9 @@ export default function LoginRequiredRoute() {
     } else if (userLogged == null) {
         return <Loading></Loading>
     } else {
-        storeDispatch(pushMessage({
-            "tag": "info",
-            "message": "Questa pagina richiede l'accesso"
-        }))
+
+        messagesStore.push("info", "Questa pagina richiede l'accesso")
+
         return <Navigate replace={true} to={"/account/login?backUrl=" + location.pathname} />
 
     }

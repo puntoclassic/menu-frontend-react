@@ -1,8 +1,8 @@
 import {
     Navigate, Outlet, useLocation, createSearchParams
 } from 'react-router-dom';
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
+import { useAppSelector } from "redux/hooks";
+import { messagesStore } from 'rx/messages';
 
 export default function AdminRequiredRoute() {
 
@@ -14,10 +14,8 @@ export default function AdminRequiredRoute() {
         return <Outlet />;
     } else {
         if (!user) {
-            storeDispatch(pushMessage({
-                "tag": "info",
-                "message": "Questa pagina richiede l'accesso"
-            }))
+
+            messagesStore.push("info", "Questa pagina richiede l'accesso")
 
             var fromParams = new URLSearchParams(location.search);
 

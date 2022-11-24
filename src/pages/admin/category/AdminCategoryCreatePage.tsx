@@ -13,9 +13,8 @@ import BaseLayout from "layouts/BaseLayout";
 import CategoryFields from "types/CategoryFields";
 import categoryValidator from "validators/categoryValidator";
 import { useForm } from "react-hook-form";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
 import categoryService from "services/categoryService";
+import { messagesStore } from "rx/messages";
 
 
 export default function AdminCategoryCreatePage() {
@@ -32,15 +31,9 @@ export default function AdminCategoryCreatePage() {
     const onSubmit = async (data: CategoryFields) => {
         setIsPending(true);
         if (await categoryService.createCategory(data)) {
-            storeDispatch(pushMessage({
-                tag: "success",
-                message: "Categoria creata",
-            }));
+            messagesStore.push("success", "Categoria creata")
         } else {
-            storeDispatch(pushMessage({
-                tag: "error",
-                message: "Si è verificato un errore",
-            }));
+            messagesStore.push("error", "Si è verificato un errore")
         }
         navigate("/amministrazione/categorie");
         setIsPending(false);

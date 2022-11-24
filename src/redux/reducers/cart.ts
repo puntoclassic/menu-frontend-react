@@ -2,7 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import CartItem from "types/CartItem";
 import CartRow from "types/CartRow";
 import { storeCartToCookie } from "../thunks/cart";
-import { CartState } from "../types/reduxTypes";
+import { CartState } from "../../types/appTypes";
 
 const { createSlice, isAnyOf } = require("@reduxjs/toolkit");
 

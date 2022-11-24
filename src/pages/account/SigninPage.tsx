@@ -15,10 +15,10 @@ import BaseLayout from "layouts/BaseLayout";
 import SigninFields from "types/SigninFields";
 import signinValidator from "validators/signinValidator";
 import { updateSigninStatus } from "redux/reducers/account";
-import { pushMessage } from "redux/reducers/messages";
 import { signin } from "redux/thunks/account";
 import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountSigninStatus, AccountState } from "redux/types/reduxTypes";
+import { AccountSigninStatus, AccountState } from "types/appTypes";
+import { messagesStore } from "rx/messages";
 
 
 export default function SigninPage() {
@@ -43,10 +43,9 @@ export default function SigninPage() {
     useEffect(() => {
 
         if (signinStatus === AccountSigninStatus.success) {
-            storeDispatch(pushMessage({
-                "tag": "success",
-                "message": "Il tuo account è stato creato, segui le istruzioni via email per attivarlo"
-            }))
+
+            messagesStore.push("success", "Il tuo account è stato creato, segui le istruzioni via email per attivarlo")
+
             storeDispatch(updateSigninStatus({
                 status: null
             }))

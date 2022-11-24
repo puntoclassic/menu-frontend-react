@@ -1,16 +1,22 @@
-import { useEffect } from "react";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { resetMessages } from "redux/reducers/messages";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { messagesStore } from "rx/messages";
+import { MessagesState } from "types/appTypes";
 
 
 export default function Messages({ addClass = null }: any) {
 
-    const messagesState = useAppSelector((state) => state.messages);
+
+    const [messagesState, setMessagesState] = useState<MessagesState>({});
     const { info, success, error } = messagesState;
+
+    useLayoutEffect(() => {
+        messagesStore.subscribe(setMessagesState);
+    }, [])
+
 
     useEffect(() => {
         return () => {
-            storeDispatch(resetMessages());
+            messagesStore.reset();
         }
     }, [])
 

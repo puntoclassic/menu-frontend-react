@@ -9,9 +9,8 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
 import categoryService from "services/categoryService";
+import { messagesStore } from "rx/messages";
 
 
 export default function AdminCategoryDeletePage() {
@@ -45,10 +44,9 @@ export default function AdminCategoryDeletePage() {
         setIsPending(true);
 
         if (await categoryService.deleteCategory(parseInt(id!))) {
-            storeDispatch(pushMessage({
-                tag: "success",
-                message: "Categoria eliminata",
-            }));
+
+            messagesStore.push("success", "Categoria eliminata")
+
         }
         setIsPending(false);
 

@@ -14,10 +14,9 @@ import BaseLayout from "layouts/BaseLayout";
 import CategoryFields from "types/CategoryFields";
 import categoryValidator from "validators/categoryValidator";
 import { useForm } from "react-hook-form";
-import { storeDispatch } from "redux/hooks";
 import configService from "services/configService";
-import { pushMessage } from "redux/reducers/messages";
 import categoryService from "services/categoryService";
+import { messagesStore } from "rx/messages";
 
 
 export default function AdminCategoryEditPage() {
@@ -61,15 +60,9 @@ export default function AdminCategoryEditPage() {
         setIsPending(true);
 
         if (await categoryService.updateCategory(data)) {
-            storeDispatch(pushMessage({
-                tag: "success",
-                message: "Categoria aggiornata",
-            }));
+            messagesStore.push("success", "Cibo aggiornata")
         } else {
-            storeDispatch(pushMessage({
-                tag: "error",
-                message: "Si è verificato un errore",
-            }));
+            messagesStore.push("error", "Si è verificato un errore")
         }
         setIsPending(false);
 

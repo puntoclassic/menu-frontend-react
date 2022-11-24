@@ -1,10 +1,18 @@
-import { useSelector } from "react-redux"
 import CategoryPill from "components/CategoryPill";
+import { useState, useLayoutEffect } from "react";
+import { AppState } from "types/appTypes";
+import { appStore } from "rx/app";
 
 
 export default function CategoryPills() {
-    const appState = useSelector((state: any) => state.app);
-    const { categories } = appState;
+
+    const [appState, setAppState] = useState<AppState>();
+
+    useLayoutEffect(() => {
+        appStore.subscribe(setAppState);
+    }, []);
+
+
 
     return <>
         <div className="col-lg-12">
@@ -13,7 +21,7 @@ export default function CategoryPills() {
                     <div className="row g-0">
                         <div className="col-lg-12 d-flex justify-content-center align-items-center">
                             <ul className="nav flex-column flex-md-row category-pills">
-                                {categories.map((cat: any) => <CategoryPill item={cat} key={cat.id}></CategoryPill>)}
+                                {appState?.categories.map((cat: any) => <CategoryPill item={cat} key={cat.id}></CategoryPill>)}
                             </ul>
                         </div>
                     </div>

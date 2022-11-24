@@ -12,9 +12,8 @@ import BaseLayout from "layouts/BaseLayout";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
-import { fetchSettings } from "redux/thunks/app";
+import { appStore } from "rx/app";
+import { messagesStore } from "rx/messages";
 
 import configService from "services/configService";
 import orderStateService from "services/orderStateService";
@@ -76,12 +75,11 @@ export default function ImpostazioniGeneraliPage() {
         setIsPending(true);
 
         if (await configService.updateSettings(data)) {
-            storeDispatch(pushMessage({
-                tag: "success",
-                message: "Impostazioni aggiornate",
-            }));
 
-            storeDispatch(fetchSettings());
+
+            messagesStore.push("success", "Impostazioni aggiornate")
+
+            appStore.reloadSettings();
         }
 
         setIsPending(false);

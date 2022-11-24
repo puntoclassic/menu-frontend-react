@@ -12,7 +12,7 @@ import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
 import { storeDispatch, useAppSelector } from "redux/hooks";
 import { activateAccountByToken } from "redux/thunks/account";
-import { AccountState, AccountVerifyStatus } from "redux/types/reduxTypes";
+import { AccountState, AccountVerifyStatus } from "types/appTypes";
 
 
 export default function VerificaAccountTokenPage() {

@@ -12,8 +12,7 @@ import BaseLayout from "layouts/BaseLayout";
 import { useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, Link } from "react-router-dom";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
+import { messagesStore } from "rx/messages";
 import orderStateService from "services/orderStateService";
 import OrderStateFields from "types/admin/OrderStateFields";
 import orderStateValidator from "validators/orderStateValidator";
@@ -46,10 +45,9 @@ export default function AdminOrderStateEditPage() {
     const onSubmit = async (data: OrderStateFields) => {
         setIsPending(true);
         if (await orderStateService.updateOrderState(data)) {
-            storeDispatch(pushMessage({
-                tag: "success",
-                message: "Stato ordine aggiornato",
-            }));
+
+            messagesStore.push("success", "Stato ordine aggiornato")
+
         }
         setIsPending(false);
     }
