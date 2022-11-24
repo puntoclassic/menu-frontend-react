@@ -1,18 +1,25 @@
 import Loading from 'pages/Loading';
+import { useState, useLayoutEffect } from 'react';
 import {
     Navigate, Outlet, useLocation
 } from 'react-router-dom';
-import { useAppSelector } from "redux/hooks";
+import { accountStore } from 'rx/account';
 import { messagesStore } from 'rx/messages';
+import { AccountState } from 'types/appTypes';
 
 export default function LoginRequiredRoute() {
 
-    const { userLogged } = useAppSelector((state) => state.account);
     const location = useLocation();
 
-    if (userLogged) {
+    const [accountState, setAccountState] = useState<AccountState>();
+
+    useLayoutEffect(() => {
+        accountStore.subscribe(setAccountState);
+    }, []);
+
+    if (accountState?.userLogged) {
         return <Outlet />;
-    } else if (userLogged == null) {
+    } else if (accountState?.userLogged == null) {
         return <Loading></Loading>
     } else {
 

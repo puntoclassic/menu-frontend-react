@@ -10,14 +10,18 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
-import { useAppSelector } from "redux/hooks";
+import { useState, useLayoutEffect } from "react";
+import { accountStore } from "rx/account";
+import { AccountState } from "types/appTypes";
 
 
 export default function LoginPage() {
 
-    const accountState = useAppSelector((state) => state.account);
+    const [accountState, setAccountState] = useState<AccountState>();
 
-    const { user } = accountState;
+    useLayoutEffect(() => {
+        accountStore.subscribe(setAccountState);
+    }, []);
 
     return <>
         <BaseLayout title="Profilo">
@@ -41,7 +45,7 @@ export default function LoginPage() {
                         <li className="breadcrumb-item text-light">
                             Profilo
                         </li>
-                        <li className="breadcrumb-item active text-light" aria-current="page">{user.firstname} {user.lastname}</li>
+                        <li className="breadcrumb-item active text-light" aria-current="page">{accountState?.user.firstname} {accountState?.user.lastname}</li>
                     </ol>
                 </nav>
             </Row>

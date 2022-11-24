@@ -13,17 +13,25 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginValidator from "validators/loginValidator";
 import LoginFields from "types/LoginFields";
-import { useEffect } from "react";
-import { login } from "redux/thunks/account";
-import { storeDispatch, useAppSelector } from "redux/hooks";
+import { useEffect, useLayoutEffect, useState } from "react";
+
+import { accountStore } from "rx/account";
+import { messagesStore } from "rx/messages";
 import { AccountState } from "types/appTypes";
 
 export default function LoginPage() {
 
     const [searchParams] = useSearchParams();
     const backUrl = searchParams.get("backUrl");
-    const accountState: AccountState = useAppSelector((state) => state.account);
-    const { user, pendingRequest } = accountState;
+
+    const [accountState, setAccountState] = useState<AccountState>();
+
+    useLayoutEffect(() => {
+        accountStore.subscribe(setAccountState);
+    }, []);
+
+    const [isPending, setIsPending] = useState(false);
+
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFields>({
@@ -31,16 +39,49 @@ export default function LoginPage() {
     });
 
     const onSubmit = async (data: LoginFields) => {
-        storeDispatch(login(data.email, data.password))
+
+        setIsPending(true);
+
+        accountStore.login(data.email, data.password).subscribe({
+            next: (value: any) => {
+
+                if (value.status === "Ok") {
+
+                    setTimeout(() => {
+                        messagesStore.push(
+                            "success",
+                            "Bentornato " + value.user.firstname + " " + value.user.lastname,
+                        );
+                    }, 50)
+                    // navigate(backUrl || "/account", { replace: true })
+                }
+                if (value.status === "NotVerified") {
+                    messagesStore.push(
+                        "info",
+                        "Devi attivare il tuo account per poter accedere ad alcune sezioni del sito.",
+                    );
+                }
+
+                setIsPending(false);
+
+            },
+            error: () => {
+                setIsPending(false);
+                messagesStore.push(
+                    "error",
+                    "Impossibile accedere, credenziali errate.",
+                );
+            }
+        })
     }
 
     useEffect(() => {
 
-        if (user && user.verified) {
+        if (accountState?.user && accountState?.user.verified) {
             navigate(backUrl || "/account", { replace: true })
         }
 
-    }, [user, navigate, backUrl])
+    }, [accountState?.user, navigate, backUrl])
 
     return <>
         <BaseLayout title="Accedi">
@@ -101,7 +142,7 @@ export default function LoginPage() {
                     </div>
                     <div className="form-group pt-4">
                         <button type="submit" className="btn btn-primary me-2">
-                            {pendingRequest ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
+                            {isPending ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
                             Accedi
                         </button>
                         <Link to="/account/signin" className="btn btn-secondary">

@@ -10,31 +10,57 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch, useAppSelector } from "redux/hooks";
 import PersonalInfoFields from "types/PersonalInfoFields";
 import personalInfoValidator from "validators/personalInfoValidator";
 import { useForm } from "react-hook-form";
-import { updatePersonalInfo } from "redux/thunks/account";
+import { accountStore } from "rx/account";
+import { messagesStore } from "rx/messages";
+import { useState, useLayoutEffect, useEffect } from "react";
+import { AccountState } from "types/appTypes";
 
 
 export default function LoginPage() {
 
-    const accountState = useAppSelector((state) => state.account);
+    const [isPending, setIsPending] = useState(false);
+    const [accountState, setAccountState] = useState<AccountState>();
 
-    const { user, pendingRequest } = accountState;
+    useLayoutEffect(() => {
+        accountStore.subscribe(setAccountState);
+    }, []);
 
 
-    const { register, handleSubmit, formState: { errors } } = useForm<PersonalInfoFields>({
+
+
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<PersonalInfoFields>({
         resolver: yupResolver(personalInfoValidator),
-        defaultValues: {
-            firstname: user.firstname,
-            lastname: user.lastname
-        }
+
     });
 
+    useEffect(() => {
+        setValue("firstname", accountState?.user.firstname);
+        setValue("lastname", accountState?.user.lastname);
+    }, [accountState, setValue]);
 
     const onSubmit = (data: PersonalInfoFields) => {
-        storeDispatch(updatePersonalInfo(data));
+        setIsPending(true);
+        accountStore.updatePersonalInfo(data).subscribe({
+            next: () => {
+                messagesStore.push(
+                    "success",
+                    "Informazioni aggiornate con successo",
+                );
+                accountStore.loadAccountState();
+                setIsPending(false);
+
+            },
+            error: () => {
+                messagesStore.push(
+                    "error",
+                    "Si è verificato un errore nel gestire la richiesta",
+                );
+                setIsPending(false);
+            }
+        })
     }
 
 
@@ -91,7 +117,7 @@ export default function LoginPage() {
 
                             <div className="form-group pt-4">
                                 <button type="submit" className="btn btn-primary me-2">
-                                    {pendingRequest ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
+                                    {isPending ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
                                     Aggiorna informazioni</button>
                             </div>
                         </form>

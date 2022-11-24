@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountManage from "components/AccountManage";
 import CartButton from "components/CartButton";
@@ -10,28 +10,35 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { logout } from "redux/thunks/account";
 import { AccountState } from "types/appTypes";
 import { messagesStore } from "rx/messages";
+import { accountStore } from "rx/account";
 
 
 export default function Logout() {
 
-    const accountState: AccountState = useAppSelector((state) => state.account);
-    const { user } = accountState;
+
     const navigate = useNavigate();
 
+    const [accountState, setAccountState] = useState<AccountState>();
+
+    useLayoutEffect(() => {
+        accountStore.subscribe(setAccountState);
+    }, []);
+
     useEffect(() => {
-        if (user) {
-            storeDispatch(logout())
+        if (accountState?.user) {
+            accountStore.logout().subscribe({
+                complete() {
+                    messagesStore.push("success", "Sei stato disconnesso con successo")
+
+                    navigate("/account/login");
+                },
+            });
         } else {
-
-            messagesStore.push("success", "Sei stato disconnesso con successo")
-
             navigate("/account/login");
         }
-    }, [user, navigate]);
+    }, [accountState?.user, navigate]);
 
     return <>
         <BaseLayout title="Logout">

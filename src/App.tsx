@@ -37,6 +37,7 @@ import CartFilledRequiredRoute from "components/roles/CartFilledRequredRoute";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { appStore } from "rx/app";
 import { AppState } from "types/appTypes";
+import { accountStore } from "rx/account";
 
 
 function convertToRGB(value: string) {
@@ -51,9 +52,13 @@ function convertToRGB(value: string) {
   ];
   return aRgb.join(",");
 }
+
+appStore.init();
+accountStore.loadAccountState();
+
 function App() {
 
-  appStore.init();
+
 
   const [appState, setAppState] = useState<AppState>();
 

@@ -1,7 +1,7 @@
 import { MessagesState } from "types/appTypes";
-import { Subject } from "rxjs";
+import { ReplaySubject } from "rxjs";
 
-const subject = new Subject<MessagesState>();
+const subject = new ReplaySubject<MessagesState>(1);
 
 export const messagesStore = {
   subscribe: (setState: any) => subject.subscribe(setState),

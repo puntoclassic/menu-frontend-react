@@ -10,23 +10,21 @@ import BaseLayout from "layouts/BaseLayout";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountState } from "types/appTypes";
 import HomeButton from "components/HomeButton";
-import { resetPasswordByToken } from "redux/thunks/account";
 import resetPasswordTokenValidator from "validators/resetPasswordTokenValidator";
 import ResetPasswordTokenFields from "types/ResetPasswordTokenFields";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { accountStore } from "rx/account";
+import { messagesStore } from "rx/messages";
 
 export default function ResetPasswordTkenPage() {
 
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token");
     const navigate = useNavigate();
+    const [isPending, setIsPending] = useState(false);
 
-    const accountState: AccountState = useAppSelector((state) => state.account);
-    const { pendingRequest } = accountState;
 
     useEffect(() => {
         if (!token) {
@@ -42,7 +40,25 @@ export default function ResetPasswordTkenPage() {
     });
 
     const onSubmit = async (data: ResetPasswordTokenFields) => {
-        storeDispatch(resetPasswordByToken(data))
+        setIsPending(true);
+        accountStore.resetPasswordByToken(data).subscribe({
+            next: () => {
+                messagesStore.push(
+                    "success",
+                    "Password cambiata con successo",
+                );
+                setIsPending(false);
+
+            },
+            error: () => {
+                messagesStore.push(
+                    "error",
+                    "Token non valido",
+                );
+                setIsPending(false);
+
+            }
+        })
         reset();
     }
     return <>
@@ -100,7 +116,7 @@ export default function ResetPasswordTkenPage() {
                     </div>
                     <div className="form-group pt-4">
                         <button type="submit" className="btn btn-primary me-2">
-                            {pendingRequest ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
+                            {isPending ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
                             Reset password
                         </button>
                     </div>

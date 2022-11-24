@@ -1,12 +1,18 @@
+import { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "redux/hooks";
+import { accountStore } from "rx/account";
 import { AccountState } from "types/appTypes";
 
 export default function AccountManage() {
-    const accountState: AccountState = useAppSelector((state) => state.account);
-    const { user } = accountState;
 
-    if (user) {
+
+    const [accountState, setAccountState] = useState<AccountState>();
+
+    useLayoutEffect(() => {
+        accountStore.subscribe(setAccountState);
+    }, []);
+
+    if (accountState?.user) {
         return <>
             <Link className="btn btn-link text-light text-decoration-none"
                 to="/account"><i className="bi bi-globe2 pe-2"></i>Profilo</Link>

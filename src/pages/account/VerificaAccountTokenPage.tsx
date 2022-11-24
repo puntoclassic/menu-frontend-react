@@ -10,9 +10,9 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { activateAccountByToken } from "redux/thunks/account";
-import { AccountState, AccountVerifyStatus } from "types/appTypes";
+
+import { accountStore } from "rx/account";
+import { messagesStore } from "rx/messages";
 
 
 export default function VerificaAccountTokenPage() {
@@ -21,22 +21,29 @@ export default function VerificaAccountTokenPage() {
     const token = searchParams.get("token");
     const navigate = useNavigate();
 
-    const accountState: AccountState = useAppSelector((state) => state.account);
-    const { verifyAccountStatus } = accountState;
 
     useEffect(() => {
         if (token) {
-            storeDispatch(activateAccountByToken(token));
+            accountStore.activateAccountByToken(token).subscribe({
+                next: () => {
+                    messagesStore.push(
+                        "success",
+                        "Il tuo account è stato attivato, ora puoi procedere con il login",
+                    );
+                    navigate("/account/login")
+                },
+                error: () => {
+                    messagesStore.push(
+                        "error",
+                        "Impossibile verificare il tuo account, token non valido",
+                    );
+                    navigate("/account/login")
+                }
+            })
         } else {
             navigate("/");
         }
     }, [token, navigate])
-
-    useEffect(() => {
-        if (verifyAccountStatus === AccountVerifyStatus.success || verifyAccountStatus === AccountVerifyStatus.failed) {
-            navigate("/account/login")
-        }
-    }, [verifyAccountStatus, navigate])
 
     return <>
         <BaseLayout title="Verifica account">

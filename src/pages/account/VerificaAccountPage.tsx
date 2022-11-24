@@ -11,10 +11,11 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch } from "redux/hooks";
-import { resendActivationEmail } from "redux/thunks/account";
+
 import VerifyAccountFields from "types/VerifyAccountFields";
 import verifyAccountValidator from "validators/verifyAccountValidator";
+import { accountStore } from "rx/account";
+import { messagesStore } from "rx/messages";
 
 
 export default function VerificaAccountPage() {
@@ -27,7 +28,21 @@ export default function VerificaAccountPage() {
     });
 
     const onSubmit = (data: VerifyAccountFields) => {
-        storeDispatch(resendActivationEmail(data));
+
+        accountStore.resendActivationEmail(data).subscribe({
+            error: () => {
+                messagesStore.push(
+                    "error",
+                    "Si è verificato un errore inaspettato",
+                );
+            },
+            next: () => {
+                messagesStore.push(
+                    "success",
+                    "Richiesta inviata, controlla la tua casella di posta",
+                );
+            }
+        })
     }
 
     return <>

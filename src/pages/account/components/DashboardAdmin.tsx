@@ -1,14 +1,18 @@
+import { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "redux/hooks";
+import { accountStore } from "rx/account";
+import { AccountState } from "types/appTypes";
 
 
 export default function DashboardAdmin() {
 
-    const accountState = useAppSelector((state) => state.account);
+    const [accountState, setAccountState] = useState<AccountState>();
 
-    const { user } = accountState;
+    useLayoutEffect(() => {
+        accountStore.subscribe(setAccountState);
+    }, []);
 
-    if (user.role === "admin") {
+    if (accountState?.user.role === "admin") {
         return <>
             <div className="row g-0">
                 <div className="row g-0 mt-3">

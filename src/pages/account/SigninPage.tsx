@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountManage from "components/AccountManage";
 import CartButton from "components/CartButton";
@@ -14,11 +14,9 @@ import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
 import SigninFields from "types/SigninFields";
 import signinValidator from "validators/signinValidator";
-import { updateSigninStatus } from "redux/reducers/account";
-import { signin } from "redux/thunks/account";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountSigninStatus, AccountState } from "types/appTypes";
+
 import { messagesStore } from "rx/messages";
+import { accountStore } from "rx/account";
 
 
 export default function SigninPage() {
@@ -30,29 +28,25 @@ export default function SigninPage() {
         }
     });
 
-    const accountState: AccountState = useAppSelector((state) => state.account);
+    const [isPending, setIsPending] = useState(false);
 
-    const { signinStatus, pendingRequest } = accountState;
     const navigate = useNavigate();
 
     const onSubmit = (data: SigninFields) => {
-        storeDispatch(signin(data));
+        setIsPending(true);
+        accountStore.signin(data).subscribe({
+            complete: () => {
+                messagesStore.push("success", "Il tuo account è stato creato, segui le istruzioni via email per attivarlo");
+                navigate("/account/login");
+                setIsPending(false);
+            },
+            error: () => {
+                messagesStore.push("error", "Si è verificato un errore inaspettato");
+                navigate("/account/login");
+                setIsPending(false);
+            }
+        })
     }
-
-
-    useEffect(() => {
-
-        if (signinStatus === AccountSigninStatus.success) {
-
-            messagesStore.push("success", "Il tuo account è stato creato, segui le istruzioni via email per attivarlo")
-
-            storeDispatch(updateSigninStatus({
-                status: null
-            }))
-            navigate("/account/login");
-        }
-
-    }, [signinStatus, navigate])
 
     return <>
         <BaseLayout title="Crea account">
@@ -133,7 +127,7 @@ export default function SigninPage() {
                         </div>
                         <div className="form-group pt-4">
                             <button type="submit" className="btn btn-primary me-2">
-                                {pendingRequest ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
+                                {isPending ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
                                 Crea account</button>
                         </div>
                     </form>

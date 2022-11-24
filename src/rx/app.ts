@@ -1,7 +1,8 @@
 import { AppState } from "types/appTypes";
 import { BehaviorSubject } from "rxjs";
 
-import { fetchCategories, fetchSettings } from "rx/actions";
+import categoryService from "services/categoryService";
+import configService from "services/configService";
 
 var currentAppState: AppState = {
   categories: [],
@@ -14,16 +15,37 @@ const subject = new BehaviorSubject<AppState>(currentAppState);
 
 export const appStore = {
   init: async () => {
-    await fetchCategories();
-    await fetchSettings();
+    appStore.fetchCategories();
+    appStore.fetchSettings();
   },
   subscribe: (setState: any) => subject.subscribe(setState),
   push: (newState: AppState) => {
     currentAppState = newState;
     subject.next(newState);
   },
-  reloadSettings: async () => {
-    await fetchSettings();
+  reloadSettings: () => {
+    appStore.fetchSettings();
   },
   getState: () => currentAppState,
+  fetchCategories: async () => {
+    var response = await categoryService.fetchCategories();
+
+    currentAppState = {
+      ...appStore.getState(),
+      categories: response.data,
+    };
+
+    subject.next(currentAppState);
+  },
+  fetchSettings: async () => {
+    var response = await configService.getSettings();
+
+    appStore.push({
+      ...appStore.getState(),
+      settings: Object.assign(
+        {},
+        ...response.data.map((x: any) => ({ [x.name]: x.value })),
+      ),
+    });
+  },
 };

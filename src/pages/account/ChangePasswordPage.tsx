@@ -11,32 +11,66 @@ import Topbar from "components/Topbar";
 import TopbarLeft from "components/TopbarLeft";
 import TopbarRight from "components/TopbarRight";
 import BaseLayout from "layouts/BaseLayout";
-import { updatePassword } from "redux/thunks/account";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountState } from "types/appTypes";
+
 import ChangePasswordFields from "types/ChangePasswordFields";
 import changePasswordValidator from "validators/changePasswordValidator";
 import Messages from "components/Messages";
+import { accountStore } from "rx/account";
+import { messagesStore } from "rx/messages";
+import { useLayoutEffect, useState } from "react";
+import { AccountState } from "types/appTypes";
 
 
 export default function ChangePasswordPage() {
-    const accountState: AccountState = useAppSelector((state) => state.account);
-    const { user } = accountState;
+    const [isPending, setIsPending] = useState(false);
+    const [accountState, setAccountState] = useState<AccountState>();
 
+    useLayoutEffect(() => {
+        accountStore.subscribe(setAccountState);
+    }, []);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ChangePasswordFields>({
         resolver: yupResolver(changePasswordValidator),
         defaultValues: {
-            email: user.email
+            email: accountState?.user.email
         },
         reValidateMode: "onSubmit"
     });
 
 
-    const { pendingRequest } = accountState;
 
     const onSubmit = (data: ChangePasswordFields) => {
-        storeDispatch(updatePassword(data));
+        setIsPending(true);
+        accountStore.updatePassword(data).subscribe({
+            next: (value: any) => {
+                if (value.status === "Success") {
+                    messagesStore.push(
+                        "success",
+                        "Password cambiata con successo",
+                    );
+                }
+                if (value.status === "BadCurrentPassword") {
+                    messagesStore.push(
+                        "error",
+                        "La password attuale è errata",
+                    );
+                }
+                if (value.status === "Error") {
+                    messagesStore.push(
+                        "error",
+                        "Si è verificato un errore inaspettato",
+                    );
+                }
+                setIsPending(false);
+            },
+            error: () => {
+                setIsPending(false);
+                messagesStore.push(
+                    "error",
+                    "Si è verificato un errore inaspettato",
+                );
+            }
+        });
         reset()
     }
 
@@ -104,7 +138,7 @@ export default function ChangePasswordPage() {
                         </div>
                         <div className="form-group pt-4">
                             <button type="submit" className="btn btn-primary me-2">
-                                {pendingRequest ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
+                                {isPending ? <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> : null}
                                 Cambia password</button>
                         </div>
                     </form>

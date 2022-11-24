@@ -1,19 +1,27 @@
+import { useState, useLayoutEffect } from 'react';
 import {
     Navigate, Outlet, useLocation, createSearchParams
 } from 'react-router-dom';
-import { useAppSelector } from "redux/hooks";
+import { accountStore } from 'rx/account';
 import { messagesStore } from 'rx/messages';
+import { AccountState } from 'types/appTypes';
 
 export default function AdminRequiredRoute() {
 
-    const { user } = useAppSelector((state) => state.account);
+
     const location = useLocation();
 
+    const [accountState, setAccountState] = useState<AccountState>();
 
-    if (user && user.role === "admin") {
+    useLayoutEffect(() => {
+        accountStore.subscribe(setAccountState);
+    }, []);
+
+
+    if (accountState?.user && accountState?.user.role === "admin") {
         return <Outlet />;
     } else {
-        if (!user) {
+        if (!accountState?.user) {
 
             messagesStore.push("info", "Questa pagina richiede l'accesso")
 
