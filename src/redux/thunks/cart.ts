@@ -36,7 +36,7 @@ export function readCartFromStorage() {
     var response = await cartService.getCartCookieData();
 
     if (Object.keys(response.data).length > 0) {
-      dispatch(pushCartAction(JSON.parse(response.data as string)));
+      dispatch(pushCartAction(response.data));
     }
   };
 }

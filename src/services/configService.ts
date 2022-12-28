@@ -16,7 +16,7 @@ const configService = {
     }
   },
   getSettings: () => {
-    return axiosIstance.get("/api/admin/setting/");
+    return axiosIstance.get("/api/setting/");
   },
 };
 

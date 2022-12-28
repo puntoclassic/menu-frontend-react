@@ -11,7 +11,7 @@ export default function CategoryPill({ item }: any) {
 
     return <>
         <li className="nav-item text-center my-1 md-my-0 lg-my-0">
-            <Link className={classes} to={"/menu/categoria/" + item.slug}>{item.name}</Link>
+            <Link className={classes} to={"/categoria/" + item.slug}>{item.name}</Link>
         </li>
     </>
 }

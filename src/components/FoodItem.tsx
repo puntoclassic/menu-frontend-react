@@ -14,6 +14,5 @@ export default function FoodItem({ item }: any) {
                 <AddToCartButton item={item}></AddToCartButton>
             </div>
         </div>
-
     </>
 }

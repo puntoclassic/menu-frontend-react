@@ -9,9 +9,6 @@ export default function AccountVerifiedRequired() {
     const { user } = useAppSelector((state) => state.account);
     const location = useLocation();
 
-
-
-
     if (user && user.verified) {
         return <Outlet />;
     } else {
