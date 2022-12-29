@@ -1,5 +1,4 @@
 import axiosIstance from "services/axiosIstance";
-import jwt_decode from "jwt-decode";
 import SigninFields from "types/SigninFields";
 import VerifyAccountFields from "types/VerifyAccountFields";
 import PersonalInfoFields from "types/PersonalInfoFields";
@@ -16,9 +15,7 @@ const accountService = {
         password: password,
       });
 
-      var { token } = response.data;
-
-      var user: any = jwt_decode(token);
+      var { user } = response.data;
 
       if (user.verified) {
         return {
