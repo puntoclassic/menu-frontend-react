@@ -7,7 +7,7 @@ export default function AdminPerPage({ onChangeHandler, currentValue }: any) {
 
     useEffect(() => {
         searchParams.set("perPage", currentValue);
-        setSearchParams(searchParams);
+        //setSearchParams(searchParams);
     }, [currentValue, setSearchParams, searchParams])
 
     return <>

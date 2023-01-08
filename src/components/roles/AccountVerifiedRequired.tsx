@@ -16,7 +16,7 @@ export default function AccountVerifiedRequired() {
             "tag": "info",
             "message": "Devi verificare il tuo account prima di poter accedere a questa pagina"
         }))
-        return <Navigate to={"/account/login?backUrl=" + location.pathname} />
+        return <Navigate to={"/account/login?backUrl=" + location.pathname} replace={true} />
     }
 
 }
