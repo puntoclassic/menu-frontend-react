@@ -45,7 +45,7 @@ export default function AdminCategoryListPage() {
         if (searchKey !== "") {
             searchParams.set("search", searchKey);
         }
-        setSearchParams(searchParams);
+        setSearchParams(searchParams, { replace: true });
 
     }, [searchKey, searchParams, setSearchParams])
 

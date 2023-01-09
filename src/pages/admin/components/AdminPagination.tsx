@@ -7,7 +7,7 @@ export default function AdminPagination({ currentValue, onChangeHandler, itemsCo
 
     useEffect(() => {
         searchParams.set("page", currentValue);
-        // setSearchParams(searchParams);
+        setSearchParams(searchParams, { replace: true });
     }, [currentValue, setSearchParams, searchParams])
 
 
