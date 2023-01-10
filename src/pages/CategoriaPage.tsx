@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import CategoryPills from "components/CategoryPills";
-import FoodItem from "components/FoodItem";
-import Header from "components/Header";
-import Row from "components/Row";
-import SearchForm from "components/SearchForm";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
-import categoryService from "services/categoryService";
-import foodService from "services/foodService";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import CategoryPills from "@src/components/CategoryPills";
+import FoodItem from "@src/components/FoodItem";
+import Header from "@src/components/Header";
+import Row from "@src/components/Row";
+import SearchForm from "@src/components/SearchForm";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
+import categoryService from "@src/services/categoryService";
+import foodService from "@src/services/foodService";
 
 export default function CategoriaPage() {
 

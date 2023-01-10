@@ -2,9 +2,9 @@ import {
   AccountSigninStatus,
   AccountState,
   AccountVerifyStatus,
-} from "../types/reduxTypes";
+} from "@src/redux/types/reduxTypes";
 
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 
 var initialState: AccountState = {
   user: null,

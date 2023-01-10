@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useAppSelector } from "redux/hooks";
-import { AccountState } from "redux/types/reduxTypes";
+import { useAppSelector } from "@src/redux/hooks";
+import { AccountState } from "@src/redux/types/reduxTypes";
 
 export default function AccountManage() {
     const accountState: AccountState = useAppSelector((state) => state.account);

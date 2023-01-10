@@ -1,22 +1,22 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import HomeButton from "components/HomeButton";
-import Messages from "components/Messages";
-import Row from "components/Row";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import HomeButton from "@src/components/HomeButton";
+import Messages from "@src/components/Messages";
+import Row from "@src/components/Row";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
 import { useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, Link } from "react-router-dom";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
-import orderStateService from "services/orderStateService";
-import OrderStateFields from "types/admin/OrderStateFields";
-import orderStateValidator from "validators/orderStateValidator";
+import { storeDispatch } from "@src/redux/hooks";
+import { pushMessage } from "@src/redux/reducers/messages";
+import orderStateService from "@src/services/orderStateService";
+import OrderStateFields from "@src/types/admin/OrderStateFields";
+import orderStateValidator from "@src/validators/orderStateValidator";
 
 export default function AdminOrderStateEditPage() {
     const { id } = useParams();

@@ -1,5 +1,5 @@
-import axiosIstance from "services/axiosIstance";
-import FoodFields from "types/admin/FoodFields";
+import axiosIstance from "@src/services/axiosIstance";
+import FoodFields from "@src/types/admin/FoodFields";
 
 const foodService = {
   getFoodsByCategorySlug: (slug: string) => {

@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import HomeButton from "components/HomeButton";
-import Row from "components/Row";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
-import foodService from "services/foodService";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import HomeButton from "@src/components/HomeButton";
+import Row from "@src/components/Row";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
+import { storeDispatch } from "@src/redux/hooks";
+import { pushMessage } from "@src/redux/reducers/messages";
+import foodService from "@src/services/foodService";
 
 export default function AdminFoodDeletePage() {
 

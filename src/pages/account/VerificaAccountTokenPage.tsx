@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import HomeButton from "components/HomeButton";
-import Row from "components/Row";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { activateAccountByToken } from "redux/thunks/account";
-import { AccountState, AccountVerifyStatus } from "redux/types/reduxTypes";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import HomeButton from "@src/components/HomeButton";
+import Row from "@src/components/Row";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import { activateAccountByToken } from "@src/redux/thunks/account";
+import { AccountState, AccountVerifyStatus } from "@src/redux/types/reduxTypes";
 
 
 export default function VerificaAccountTokenPage() {

@@ -1,11 +1,11 @@
-import axiosIstance from "services/axiosIstance";
-import SigninFields from "types/SigninFields";
-import VerifyAccountFields from "types/VerifyAccountFields";
-import PersonalInfoFields from "types/PersonalInfoFields";
-import ChangePasswordFields from "types/ChangePasswordFields";
+import axiosIstance from "@src/services/axiosIstance";
+import SigninFields from "@src/types/SigninFields";
+import VerifyAccountFields from "@src/types/VerifyAccountFields";
+import PersonalInfoFields from "@src/types/PersonalInfoFields";
+import ChangePasswordFields from "@src/types/ChangePasswordFields";
 import { AxiosError } from "axios";
-import ResetPasswordFields from "types/ResetPasswordFields";
-import ResetPasswordTokenFields from "types/ResetPasswordTokenFields";
+import ResetPasswordFields from "@src/types/ResetPasswordFields";
+import ResetPasswordTokenFields from "@src/types/ResetPasswordTokenFields";
 
 const accountService = {
   login: async (email: string, password: string) => {

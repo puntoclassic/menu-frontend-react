@@ -1,5 +1,5 @@
-import categoryService from "services/categoryService";
-import configService from "services/configService";
+import categoryService from "@src/services/categoryService";
+import configService from "@src/services/configService";
 import { pushCategories, pushSettings } from "../reducers/app";
 
 export function fetchCategories() {

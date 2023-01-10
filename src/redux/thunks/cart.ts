@@ -1,4 +1,4 @@
-import { cartService } from "services/cartService";
+import { cartService } from "@src/services/cartService";
 import {
   addToCartAction,
   decreaseQtyAction,

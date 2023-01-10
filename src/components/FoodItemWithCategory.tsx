@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import AddToCartButton from "components/AddToCartButton";
+import AddToCartButton from "@src/components/AddToCartButton";
 
 export default function FoodItemWithCategory({ item }: any) {
     return <>

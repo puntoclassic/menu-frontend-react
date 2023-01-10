@@ -1,22 +1,22 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import Messages from "components/Messages";
-import Row from "components/Row";
-import SearchForm from "components/SearchForm";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import Messages from "@src/components/Messages";
+import Row from "@src/components/Row";
+import SearchForm from "@src/components/SearchForm";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import loginValidator from "validators/loginValidator";
-import LoginFields from "types/LoginFields";
+import loginValidator from "@src/validators/loginValidator";
+import LoginFields from "@src/types/LoginFields";
 import { useEffect } from "react";
-import { login } from "redux/thunks/account";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountState } from "redux/types/reduxTypes";
+import { login } from "@src/redux/thunks/account";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import { AccountState } from "@src/redux/types/reduxTypes";
 
 export default function LoginPage() {
 

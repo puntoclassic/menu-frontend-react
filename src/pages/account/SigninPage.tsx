@@ -3,22 +3,22 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import HomeButton from "components/HomeButton";
-import Row from "components/Row";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
-import SigninFields from "types/SigninFields";
-import signinValidator from "validators/signinValidator";
-import { updateSigninStatus } from "redux/reducers/account";
-import { pushMessage } from "redux/reducers/messages";
-import { signin } from "redux/thunks/account";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountSigninStatus, AccountState } from "redux/types/reduxTypes";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import HomeButton from "@src/components/HomeButton";
+import Row from "@src/components/Row";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
+import SigninFields from "@src/types/SigninFields";
+import signinValidator from "@src/validators/signinValidator";
+import { updateSigninStatus } from "@src/redux/reducers/account";
+import { pushMessage } from "@src/redux/reducers/messages";
+import { signin } from "@src/redux/thunks/account";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import { AccountSigninStatus, AccountState } from "@src/redux/types/reduxTypes";
 
 
 export default function SigninPage() {

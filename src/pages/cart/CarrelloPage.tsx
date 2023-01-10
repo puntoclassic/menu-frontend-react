@@ -1,19 +1,19 @@
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import CartRow from "pages/cart/components/CartRow";
-import CategoryPills from "components/CategoryPills";
-import CheckoutButton from "pages/cart/components/CheckoutButton";
-import Header from "components/Header";
-import HomeButton from "components/HomeButton";
-import Messages from "components/Messages";
-import Row from "components/Row";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import CartRow from "@src/pages/cart/components/CartRow";
+import CategoryPills from "@src/components/CategoryPills";
+import CheckoutButton from "@src/pages/cart/components/CheckoutButton";
+import Header from "@src/components/Header";
+import HomeButton from "@src/components/HomeButton";
+import Messages from "@src/components/Messages";
+import Row from "@src/components/Row";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
 
-import { useAppSelector } from "redux/hooks";
-import { CartState } from "redux/types/reduxTypes";
+import { useAppSelector } from "@src/redux/hooks";
+import { CartState } from "@src/types/reduxTypes";
 
 
 export default function CarrelloPage() {

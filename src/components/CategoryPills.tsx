@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import CategoryPill from "components/CategoryPill";
+import CategoryPill from "@src/components/CategoryPill";
 
 
 export default function CategoryPills() {

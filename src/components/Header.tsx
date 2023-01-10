@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useAppSelector } from "redux/hooks";
+import { useAppSelector } from "@src/redux/hooks";
 
 
 export default function Header() {

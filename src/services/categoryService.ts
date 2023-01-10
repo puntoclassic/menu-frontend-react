@@ -1,5 +1,5 @@
-import axiosIstance from "services/axiosIstance";
-import CategoryFields from "types/CategoryFields";
+import axiosIstance from "@src/services/axiosIstance";
+import CategoryFields from "@src/types/CategoryFields";
 
 const categoryService = {
   getCategory: (id: number) => {

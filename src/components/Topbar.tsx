@@ -1,4 +1,4 @@
-import Row from "components/Row";
+import Row from "@src/components/Row";
 
 
 export default function Topbar({ children }: any) {

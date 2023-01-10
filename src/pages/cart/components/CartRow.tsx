@@ -1,5 +1,5 @@
-import { increaseQty, decreaseQty, removeFromCart } from "redux/thunks/cart"
-import { storeDispatch } from "redux/hooks";
+import { increaseQty, decreaseQty, removeFromCart } from "@src/redux/thunks/cart"
+import { storeDispatch } from "@src/redux/hooks";
 
 
 export default function CartRow({ row, actionsVisible }: any) {

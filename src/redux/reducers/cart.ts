@@ -1,10 +1,10 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import CartItem from "types/CartItem";
-import CartRow from "types/CartRow";
+import CartItem from "@src/types/CartItem";
+import CartRow from "@src/types/CartRow";
 import { storeCartToCookie } from "../thunks/cart";
-import { CartState } from "../types/reduxTypes";
+import { CartState } from "../@src/types/reduxTypes";
 
-const { createSlice, isAnyOf } = require("@reduxjs/toolkit");
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 
 const isAddToCart = (action: { type: string }) => {
   return action.type.endsWith("/addToCartAction");

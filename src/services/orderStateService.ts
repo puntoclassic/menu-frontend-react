@@ -1,5 +1,5 @@
-import axiosIstance from "services/axiosIstance";
-import OrderStateFields from "types/admin/OrderStateFields";
+import axiosIstance from "@src/services/axiosIstance";
+import OrderStateFields from "@src/types/admin/OrderStateFields";
 
 const orderStateService = {
   getOrderStateForSelect: () => {

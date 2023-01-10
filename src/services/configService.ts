@@ -1,5 +1,5 @@
-import axiosIstance from "services/axiosIstance";
-import SettingFields from "types/admin/SettingFields";
+import axiosIstance from "@src/services/axiosIstance";
+import SettingFields from "@src/types/admin/SettingFields";
 
 const backendUrl = "http://localhost:4000/";
 

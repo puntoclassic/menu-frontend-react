@@ -1,9 +1,9 @@
-import Loading from 'pages/Loading';
+import Loading from '@src/pages/Loading';
 import {
     Navigate, Outlet, useLocation
 } from 'react-router-dom';
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import { pushMessage } from "@src/redux/reducers/messages";
 
 export default function LoginRequiredRoute() {
 

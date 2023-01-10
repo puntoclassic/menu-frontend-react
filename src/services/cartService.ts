@@ -1,4 +1,4 @@
-import axiosIstance from "services/axiosIstance";
+import axiosIstance from "@src/services/axiosIstance";
 
 const getCartCookieData = () => {
   return axiosIstance.get("/api/cart/cookie");

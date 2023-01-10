@@ -1,18 +1,18 @@
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import HomeButton from "components/HomeButton";
-import Row from "components/Row";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
-import CartRow from "pages/cart/components/CartRow";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import HomeButton from "@src/components/HomeButton";
+import Row from "@src/components/Row";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
+import CartRow from "@src/pages/cart/components/CartRow";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushNote } from "redux/reducers/cart";
-import { AppState, CartState } from "redux/types/reduxTypes";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import { pushNote } from "@src/redux/reducers/cart";
+import { AppState, CartState } from "@src/types/reduxTypes";
 
 export default function RiepilogoOrdinePage() {
     const cartState: CartState = useAppSelector((state) => state.cart);

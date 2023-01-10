@@ -1,6 +1,6 @@
-import { AppState } from "../types/reduxTypes";
+import { AppState } from "../@src/types/reduxTypes";
 
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 
 var initialState: AppState = {
   categories: [],

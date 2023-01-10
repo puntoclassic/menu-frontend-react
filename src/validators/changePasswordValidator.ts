@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from "axios";
-import accountService from "services/accountService";
+import accountService from "@src/services/accountService";
 import * as yup from "yup";
 
 export default yup.object({

@@ -1,5 +1,5 @@
-import { storeDispatch } from "redux/hooks";
-import { addToCart } from "redux/thunks/cart";
+import { storeDispatch } from "@src/redux/hooks";
+import { addToCart } from "@src/redux/thunks/cart";
 
 
 export default function AddToCartButton({ item }: any) {

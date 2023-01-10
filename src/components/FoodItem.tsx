@@ -1,4 +1,4 @@
-import AddToCartButton from "components/AddToCartButton";
+import AddToCartButton from "@src/components/AddToCartButton";
 
 export default function FoodItem({ item }: any) {
     return <>

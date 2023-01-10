@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet"
-import { useAppSelector } from "redux/hooks"
+import { useAppSelector } from "@src/redux/hooks"
 
 export default function BaseLayout({ title, children }: any) {
     const appState = useAppSelector((state) => state.app);

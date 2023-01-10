@@ -1,8 +1,8 @@
 import {
     Navigate, Outlet, useLocation, createSearchParams
 } from 'react-router-dom';
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushMessage } from "redux/reducers/messages";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import { pushMessage } from "@src/redux/reducers/messages";
 
 export default function AdminRequiredRoute() {
 

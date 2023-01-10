@@ -1,5 +1,5 @@
 import axios from "axios";
-import configService from "services/configService";
+import configService from "@src/services/configService";
 
 var axiosIstance = axios.create({
   baseURL: configService.backendUrl(),

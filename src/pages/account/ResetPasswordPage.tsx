@@ -1,21 +1,21 @@
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import Messages from "components/Messages";
-import Row from "components/Row";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import Messages from "@src/components/Messages";
+import Row from "@src/components/Row";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { AccountState } from "redux/types/reduxTypes";
-import ResetPasswordFields from "types/ResetPasswordFields";
-import HomeButton from "components/HomeButton";
-import { resetPassword } from "redux/thunks/account";
-import resetPasswordValidator from "validators/resetPasswordValidator";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import { AccountState } from "@src/redux/types/reduxTypes";
+import ResetPasswordFields from "@src/types/ResetPasswordFields";
+import HomeButton from "@src/components/HomeButton";
+import { resetPassword } from "@src/redux/thunks/account";
+import resetPasswordValidator from "@src/validators/resetPasswordValidator";
 
 export default function ResetPasswordPage() {
 

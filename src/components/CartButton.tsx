@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
-import { useAppSelector } from "redux/hooks"
-import { CartState } from "redux/types/reduxTypes"
+import { useAppSelector } from "@src/redux/hooks"
+import { CartState } from "@src/redux/types/reduxTypes"
 
 export default function CartButton() {
     const cartState: CartState = useAppSelector((state) => state.cart)

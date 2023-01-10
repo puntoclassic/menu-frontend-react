@@ -1,20 +1,20 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import HomeButton from "components/HomeButton";
-import Messages from "components/Messages";
-import Row from "components/Row";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch } from "redux/hooks";
-import { resendActivationEmail } from "redux/thunks/account";
-import VerifyAccountFields from "types/VerifyAccountFields";
-import verifyAccountValidator from "validators/verifyAccountValidator";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import HomeButton from "@src/components/HomeButton";
+import Messages from "@src/components/Messages";
+import Row from "@src/components/Row";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
+import { storeDispatch } from "@src/redux/hooks";
+import { resendActivationEmail } from "@src/redux/thunks/account";
+import VerifyAccountFields from "@src/types/VerifyAccountFields";
+import verifyAccountValidator from "@src/validators/verifyAccountValidator";
 
 
 export default function VerificaAccountPage() {

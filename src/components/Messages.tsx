@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { resetMessages } from "redux/reducers/messages";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import { resetMessages } from "@src/redux/reducers/messages";
 
 
 export default function Messages({ addClass = null }: any) {

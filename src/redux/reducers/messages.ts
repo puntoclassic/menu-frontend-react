@@ -1,6 +1,6 @@
-import { MessagesState } from "../types/reduxTypes";
+import { MessagesState } from "../@src/types/reduxTypes";
 
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 
 var initialState: MessagesState = {};
 

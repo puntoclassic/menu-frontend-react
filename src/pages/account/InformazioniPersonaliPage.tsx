@@ -1,20 +1,20 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import Messages from "components/Messages";
-import Row from "components/Row";
-import SearchForm from "components/SearchForm";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import PersonalInfoFields from "types/PersonalInfoFields";
-import personalInfoValidator from "validators/personalInfoValidator";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import Messages from "@src/components/Messages";
+import Row from "@src/components/Row";
+import SearchForm from "@src/components/SearchForm";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import PersonalInfoFields from "@src/types/PersonalInfoFields";
+import personalInfoValidator from "@src/validators/personalInfoValidator";
 import { useForm } from "react-hook-form";
-import { updatePersonalInfo } from "redux/thunks/account";
+import { updatePersonalInfo } from "@src/redux/thunks/account";
 
 
 export default function LoginPage() {

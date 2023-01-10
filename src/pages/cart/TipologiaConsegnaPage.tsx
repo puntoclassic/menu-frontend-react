@@ -1,18 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import AccountManage from "components/AccountManage";
-import CartButton from "components/CartButton";
-import Header from "components/Header";
-import HomeButton from "components/HomeButton";
-import Row from "components/Row";
-import Topbar from "components/Topbar";
-import TopbarLeft from "components/TopbarLeft";
-import TopbarRight from "components/TopbarRight";
-import BaseLayout from "layouts/BaseLayout";
+import AccountManage from "@src/components/AccountManage";
+import CartButton from "@src/components/CartButton";
+import Header from "@src/components/Header";
+import HomeButton from "@src/components/HomeButton";
+import Row from "@src/components/Row";
+import Topbar from "@src/components/Topbar";
+import TopbarLeft from "@src/components/TopbarLeft";
+import TopbarRight from "@src/components/TopbarRight";
+import BaseLayout from "@src/layouts/BaseLayout";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { storeDispatch, useAppSelector } from "redux/hooks";
-import { pushTipologiaConsegna } from "redux/reducers/cart";
-import tipologiaConsegnaValidator from "validators/tipologiaConsegnaValidator";
+import { storeDispatch, useAppSelector } from "@src/redux/hooks";
+import { pushTipologiaConsegna } from "@src/redux/reducers/cart";
+import tipologiaConsegnaValidator from "@src/validators/tipologiaConsegnaValidator";
 
 
 export default function TipologiaConsegnaPage() {

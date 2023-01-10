@@ -1,5 +1,5 @@
-import SigninFields from "types/SigninFields";
-import VerifyAccountFields from "types/VerifyAccountFields";
+import SigninFields from "@src/types/SigninFields";
+import VerifyAccountFields from "@src/types/VerifyAccountFields";
 import {
   updatePending,
   updateSigninStatus,
@@ -7,13 +7,16 @@ import {
   updateUserLogged,
   updateVerificationStatus,
 } from "../reducers/account";
-import { pushMessage, resetMessages } from "../reducers/messages";
-import { AccountSigninStatus, AccountVerifyStatus } from "../types/reduxTypes";
-import PersonalInfoFields from "types/PersonalInfoFields";
-import ChangePasswordFields from "types/ChangePasswordFields";
-import ResetPasswordFields from "types/ResetPasswordFields";
-import ResetPasswordTokenFields from "types/ResetPasswordTokenFields";
-import accountService from "services/accountService";
+import { pushMessage, resetMessages } from "@src/redux/reducers/messages";
+import {
+  AccountSigninStatus,
+  AccountVerifyStatus,
+} from "@src/redux/types/reduxTypes";
+import PersonalInfoFields from "@src/types/PersonalInfoFields";
+import ChangePasswordFields from "@src/types/ChangePasswordFields";
+import ResetPasswordFields from "@src/types/ResetPasswordFields";
+import ResetPasswordTokenFields from "@src/types/ResetPasswordTokenFields";
+import accountService from "@src/services/accountService";
 
 export function login(email: string, password: string) {
   return async function (dispatch: any, getState: any) {

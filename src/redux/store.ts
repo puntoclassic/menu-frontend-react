@@ -6,7 +6,7 @@ import { loadAccountState } from "./thunks/account";
 import { fetchCategories, fetchSettings } from "./thunks/app";
 import { readCartFromStorage } from "./thunks/cart";
 
-const { configureStore } = require("@reduxjs/toolkit");
+import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
   reducer: {
